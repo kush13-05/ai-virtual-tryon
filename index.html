@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGen AI Virtual Try-On Studio</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --text-color: #f8fafc;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color); color: var(--text-color);
+            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
+        }
+        .container {
+            max-width: 900px; width: 100%; background: var(--card-bg); padding: 30px;
+            border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); margin-top: 40px;
+        }
+        h1 { text-align: center; color: #ffffff; font-size: 2.5rem; margin-bottom: 10px; }
+        p.subtitle { text-align: center; color: #94a3b8; margin-bottom: 40px; }
+        .upload-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .drop-zone {
+            border: 2px dashed #475569; padding: 30px; text-align: center; border-radius: 12px;
+            cursor: pointer; background: #111827; transition: all 0.3s ease;
+        }
+        .drop-zone:hover { border-color: var(--accent-color); background: #1e293b; }
+        input[type="file"] { display: none; }
+        .preview-img { max-width: 100%; max-height: 200px; margin-top: 15px; border-radius: 8px; display: none; }
+        .btn-container { display: flex; justify-content: center; margin-top: 30px; }
+        .magic-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white; border: none; padding: 15px 40px; font-size: 1.2rem; font-weight: bold;
+            border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .magic-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6); }
+        .loader { display: none; text-align: center; margin-top: 20px; color: #60a5fa; font-weight: bold; }
+        .result-section { margin-top: 40px; text-align: center; display: none; }
+        .result-img { max-width: 100%; max-height: 450px; border-radius: 12px; border: 4px solid #334155; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>👗 NextGen AI Virtual Try-On Studio</h1>
+        <p class="subtitle">Flipkart और Myntra से 10 कदम आगे - Hyper-Realistic Fabric Physics</p>
+        <div class="upload-section">
+            <div class="drop-zone" onclick="document.getElementById('personInput').click()">
+                <h3>🧑 अपनी फोटो अपलोड करें</h3>
+                <p>Click to browse full-body image</p>
+                <input type="file" id="personInput" accept="image/*" onchange="previewFile(this, 'personPreview')">
+                <img id="personPreview" class="preview-img" alt="Person Preview">
+            </div>
+            <div class="drop-zone" onclick="document.getElementById('garmentInput').click()">
+                <h3>👕 कपड़े की फोटो अपलोड करें</h3>
+                <p>Click to browse shirt/t-shirt image</p>
+                <input type="file" id="garmentInput" accept="image/*" onchange="previewFile(this, 'garmentPreview')">
+                <img id="garmentPreview" class="preview-img" alt="Garment Preview">
+            </div>
+        </div>
+        <div class="btn-container">
+            <button class="magic-btn" onclick="runVirtualTryOn()">✨ जादू देखिए (Try On Now)</button>
+        </div>
+        <div class="loader" id="appLoader">
+            🔄 AI आपके शरीर की फिजिक्स और कपड़े के टेक्सचर को मैच कर रहा है... कृपया 15 सेकंड रुकें।
+        </div>
+        <div class="result-section" id="resultArea">
+            <h2>✅ आपका कस्टमाइज्ड लुक रेडी है!</h2>
+            <img id="finalOutput" class="result-img" src="" alt="Final Try On Result">
+        </div>
+    </div>
+
+    <!-- 🔗 JavaScript को अलग फ़ाइल से लिंक करना -->
+    <script src="script.js"></script>
+</body>
+</html>
