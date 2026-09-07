@@ -7,6 +7,7 @@ import tempfile
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from gradio_client import Client, handle_file
 
 # Load variables from the .env file into the environment (local dev)
@@ -18,14 +19,17 @@ logger = logging.getLogger("fashion-engine")
 
 app = FastAPI(title="NextGen AI Fashion Engine")
 
-# --- CORS: restrict to real frontend domain(s), set via env var ---
-# In .env: ALLOWED_ORIGINS=https://yourdomain.com,http://localhost:5500
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:5500").split(",")
+# --- CORS ---
+# Now that the frontend (index.html/script.js) is served by this SAME app
+# (see StaticFiles mount below), browser requests come from the same origin
+# and CORS restrictions barely matter anymore. Kept here mainly in case you
+# ever call this API from a different domain later.
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
@@ -182,3 +186,9 @@ async def fit_garment_pipeline(
     finally:
         # Privacy: original photos are always wiped, success or failure.
         _cleanup(safe_person_path, safe_garment_path)
+
+
+# --- Serve the frontend (index.html, script.js, manifest.json) from this
+# SAME app, so there's just one link/one deployment for the whole project.
+# Mounted LAST so it never shadows the /api/... and /health routes above.
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
