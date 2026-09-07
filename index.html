@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NextGen AI Virtual Try-On Studio</title>
@@ -55,7 +56,7 @@
                 <img id="personPreview" class="preview-img" alt="Person Preview">
             </div>
             <div class="drop-zone" onclick="document.getElementById('garmentInput').click()">
-                <h3>👕 कपड़े की फोटो अपलोड करें</h3>
+                <h3>👕 कपड़े की फोटो अपलोड करें</h3>
                 <p>Click to browse shirt/t-shirt image</p>
                 <input type="file" id="garmentInput" accept="image/*" onchange="previewFile(this, 'garmentPreview')">
                 <img id="garmentPreview" class="preview-img" alt="Garment Preview">
@@ -65,7 +66,7 @@
             <button class="magic-btn" onclick="runVirtualTryOn()">✨ जादू देखिए (Try On Now)</button>
         </div>
         <div class="loader" id="appLoader">
-            🔄 AI आपके शरीर की फिजिक्स और कपड़े के टेक्सचर को मैच कर रहा है... कृपया 15 सेकंड रुकें।
+            🔄 AI आपके शरीर की फिजिक्स और कपड़े के टेक्सचर को मैच कर रहा है... कृपया 15 सेकंड रुकें।
         </div>
         <div class="result-section" id="resultArea">
             <h2>✅ आपका कस्टमाइज्ड लुक रेडी है!</h2>
