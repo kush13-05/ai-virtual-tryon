@@ -2,7 +2,7 @@
 // Handles live image preview and talks to the FastAPI backend
 
 // Change this if you deploy the backend somewhere other than localhost
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "";
 
 // 1. Image Preview Logic
 function previewFile(input, previewId) {
